@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.ipynb_checkpoints/
+
+# Data, splits and generated outputs
+data/
+splits.json
+codes/**/outputs/
+codes/**/results/
+codes/**/ablation_runs/
+codes/**/iteration_runs/
+codes/Test/acceleration_sweep/
+codes/Test/comparison.png
+codes/Test/results_table_*
+
+# Model and data files
+*.pt
+*.pth
+*.h5
+*.npy
