@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies (CPU)
+        run: |
+          pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          pip install numpy h5py scikit-image scipy pandas matplotlib tabulate
+
+      - name: Check Python syntax
+        run: python -m compileall -q codes tests
+
+      - name: Check shell scripts
+        run: |
+          for f in $(find codes -name "*.sh"); do
+            bash -n "$f"
+          done
+
+      - name: Test masks, operators, metrics, models and baselines
+        run: python tests/test_core.py
